@@ -1,38 +1,23 @@
-import { Component } from '@angular/core';
-import { observable, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { interval, timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'RxJS';
-  obs: any;
+export class AppComponent implements OnInit {
+  title = 'ReactiveXJS';
 
+  constructor() {
 
-  ngOnInit() {
-    this.obs = Observable.create(function (observer: any) {
-      observer.next(1);
-      observer.next(2);
-      observer.next(3);
-      setTimeout(() => {
-        observer.next(4);
-        observer.complete();
-      }, 1000);
-    }
-    );
   }
 
-  rxJSFunction() {
-      console.log('just before subscribe');
+  public ngOnInit(): void {
+    const contador = interval(1000);
 
-    this.obs.subscribe({
-      next: (x:any) => console.log('got value ' + x),
-      error: (err:any) => console.log('someting wrong occurred: ' + err),
-      complete: () => console.log('done'),
+    contador.subscribe((N) => {
+      console.log('tick ' + N);
     });
-    console.log('just after subscribe');
   }
-
 }
