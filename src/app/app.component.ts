@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { interval, timer } from 'rxjs';
+import { interval, fromEvent, merge, empty  } from 'rxjs';
+import { switchMap, scan, takeWhile, startWith, mapTo, take} from 'rxjs/operators';
+import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +11,13 @@ import { interval, timer } from 'rxjs';
 export class AppComponent implements OnInit {
   title = 'ReactiveXJS';
 
-  constructor() {
-
-  }
+  constructor(private UsersService: UsersService) { }
 
   public ngOnInit(): void {
-    const contador = interval(1000);
-
-    contador.subscribe((N) => {
-      console.log('tick ' + N);
-    });
+    this.UsersService.getUsers().subscribe( res => {
+      console.log(res);
+      
+    })
   }
 }
+
